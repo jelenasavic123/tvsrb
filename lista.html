@@ -11,14 +11,14 @@
             overflow: hidden;
             background-color: #000;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
         }
 
         .video-container {
-            position: relative;
             width: 100vw;
-            height: 100vh;
+            height: 75vh; /* Proširena visina video playera */
+            position: relative;
         }
 
         iframe {
@@ -67,6 +67,19 @@
         .channel-list button:hover {
             background-color: #666;
         }
+
+        .chat-container {
+            width: 100vw;
+            height: 25vh; /* Visina chata */
+            background-color: #000;
+            border-top: 1px solid #444;
+        }
+
+        .chat-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
     </style>
 </head>
 <body>
@@ -88,6 +101,11 @@
             <button onclick="changeChannel('https://zultv.com/ifr/rts1.php')">RTS1</button>
             <button onclick="changeChannel('https://tvcdn365.ru/player/playerjs.html?file=https://webtvstream.bhtelecom.ba/rts2.m3u8')">RTS2</button>
         </div>
+    </div>
+
+    <div class="chat-container">
+        <!-- Chat iframe -->
+        <iframe src="https://www5.cbox.ws/box/?boxid=952769&boxtag=V9rAnC" allowtransparency="yes" allow="autoplay" frameborder="0" marginheight="0" marginwidth="0" scrolling="auto"></iframe>
     </div>
 
     <script>

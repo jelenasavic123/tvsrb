@@ -32,7 +32,7 @@
 </head>
 <body>
     <div class="video-container">
-        <video id="video" controls></video>
+        <video id="video" controls autoplay></video>
     </div>
 
     <!-- Include hls.js library -->
@@ -47,7 +47,9 @@
                 hls.loadSource(videoSrc);
                 hls.attachMedia(video);
                 hls.on(Hls.Events.MANIFEST_PARSED, function() {
-                    video.play();
+                    video.play().catch(error => {
+                        console.error('Autoplay was prevented:', error);
+                    });
                 });
                 hls.on(Hls.Events.ERROR, function(event, data) {
                     console.error("HLS.js error:", data.fatal);
@@ -55,7 +57,9 @@
             } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
                 video.src = videoSrc;
                 video.addEventListener('loadedmetadata', function() {
-                    video.play();
+                    video.play().catch(error => {
+                        console.error('Autoplay was prevented:', error);
+                    });
                 });
             } else {
                 console.error("HLS is not supported in this browser.");

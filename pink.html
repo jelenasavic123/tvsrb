@@ -3,68 +3,110 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Video Player</title>
+    <title>Televizija Uživo</title>
     <style>
         body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
             margin: 0;
-            padding: 0;
-            background: #000;
-            overflow: hidden; /* Ovo osigurava da ne bude scroll barova */
+            background-color: #000;
         }
 
         .video-container {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            position: relative;
+            width: 80%;
+            height: 70%;
         }
 
-        video {
+        iframe {
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            border: none;
+        }
+
+        .channel-list {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 10px;
+            border-radius: 5px;
+            display: none; /* Skriveno dok se ne prikaže */
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .toggle-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 10px 20px;
+            background-color: rgba(255, 255, 255, 0.8);
+            color: #000;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .toggle-button:hover {
+            background-color: rgba(255, 255, 255, 1);
+        }
+
+        .channel-list button {
+            padding: 10px;
+            background-color: #444;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .channel-list button:hover {
+            background-color: #666;
         }
     </style>
 </head>
 <body>
+
     <div class="video-container">
-        <video id="video" controls autoplay></video>
+        <!-- Video Iframe -->
+        <iframe id="tvFrame" src="https://uzivoprenos.net/uzivo-televizija/uzivo.php?search=zadruga" allowfullscreen></iframe>
+
+        <!-- Button to Toggle Channel List -->
+        <button class="toggle-button" onclick="toggleChannelList()">Izaberi Kanal</button>
+
+        <!-- Hidden Channel List -->
+        <div id="channelList" class="channel-list">
+            <button onclick="changeChannel('https://uzivoprenos.net/uzivo-televizija/uzivo.php?search=zadruga')">Zadruga</button><button onclick="changeChannel('https://uzivoprenos.net/uzivo-televizija/uzivo.php?search=pink')">Pink</button>
+            <button onclick="changeChannel('https://jelenasavic123.github.io/tvsrb/pink.html')">Pink Rezervni</button>
+            <button onclick="changeChannel('https://livetvkodiserbia.com/live/iframetestPR2.php')">Prva Tv</button>
+            <button onclick="changeChannel('https://uzivoprenos.net/uzivo-televizija/uzivo.php?search=redtv')">RED Tv</button>
+            <button onclick="changeChannel('https://zultv.com/ifr/rts1.php')">RTS1</button>
+            <button onclick="changeChannel('https://tvcdn365.ru/player/playerjs.html?file=https://webtvstream.bhtelecom.ba/rts2.m3u8')">RTS2</button><button onclick="changeChannel('https://uzivoprenos.net/uzivo-televizija/uzivo.php?search=b92')">B92</button>
+<button onclick="changeChannel('https://uzivoprenos.net/uzivo-televizija/uzivo.php?search=b92')">B92</button>
+        </div>
     </div>
 
-    <!-- Include hls.js library -->
-    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            var video = document.getElementById('video');
-            var videoSrc = 'https://live.rednet.rs/providus/pink1.m3u8';
-
-            if (Hls.isSupported()) {
-                var hls = new Hls();
-                hls.loadSource(videoSrc);
-                hls.attachMedia(video);
-                hls.on(Hls.Events.MANIFEST_PARSED, function() {
-                    video.play().catch(error => {
-                        console.error('Autoplay was prevented:', error);
-                    });
-                });
-                hls.on(Hls.Events.ERROR, function(event, data) {
-                    console.error("HLS.js error:", data.fatal);
-                });
-            } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
-                video.src = videoSrc;
-                video.addEventListener('loadedmetadata', function() {
-                    video.play().catch(error => {
-                        console.error('Autoplay was prevented:', error);
-                    });
-                });
+        // Toggle the visibility of the channel list
+        function toggleChannelList() {
+            const list = document.getElementById('channelList');
+            if (list.style.display === 'flex') {
+                list.style.display = 'none';
             } else {
-                console.error("HLS is not supported in this browser.");
+                list.style.display = 'flex';
             }
-        });
+        }
+
+        // Change the channel in the iframe
+        function changeChannel(channelUrl) {
+            document.getElementById('tvFrame').src = channelUrl;
+            document.getElementById('channelList').style.display = 'none'; // Hide list after selection
+        }
     </script>
+
 </body>
 </html>

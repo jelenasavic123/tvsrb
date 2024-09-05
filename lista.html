@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,7 +17,7 @@
 
         .video-container {
             width: 100vw;
-            height: 70vh; /* Smanjena visina video playera */
+            height: 40vh; /* Smanjena visina video playera na 40% */
             position: relative;
             z-index: 1; /* Postavljanje nižeg z-index za video */
         }
@@ -74,7 +73,7 @@
 
         .chat-container {
             width: 100vw;
-            height: 30vh; /* Povećana visina chat prozora */
+            height: 60vh; /* Povećana visina chat prozora na 60% */
             background-color: #fff; /* Bela pozadina */
             border-top: 1px solid #ddd; /* Svetla granica na vrhu */
             position: relative;
@@ -109,6 +108,11 @@
         </div>
     </div>
 
+    <div class="chat-container">
+        <!-- Chat Container -->
+        <iframe src="https://tlk.io/svenadlanutv" title="Chat" style="width: 100%; height: 100%; border: none;"></iframe>
+    </div>
+
     <script>
         // Toggle the visibility of the channel list
         function toggleChannelList() {
@@ -129,8 +133,3 @@
 
 </body>
 </html>
-
-    <!-- Chat Container -->
-    <div class="chat-container">
-        <iframe src="https://tlk.io/svenadlanutv" title="Chat" style="width: 100%; height: 100%; border: none;"></iframe>
-    </div>
